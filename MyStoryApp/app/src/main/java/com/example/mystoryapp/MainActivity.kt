@@ -8,13 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mystoryapp.databinding.ActivityMainBinding
 import com.example.mystoryapp.recyclerview.MainActivityAdapter
+import com.example.mystoryapp.recyclerview.OnItemClickListener
 import com.example.mystoryapp.response.ListStoryItem
 import com.example.mystoryapp.utility.Preferences
 import com.example.mystoryapp.utility.ViewModelFactory
 import com.example.mystoryapp.utility.Result
 import com.example.mystoryapp.viewmodels.MainViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnItemClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var preferences: Preferences
     private lateinit var token: String
@@ -63,7 +64,12 @@ class MainActivity : AppCompatActivity() {
     fun setRecyclerView(){
         val recyclerView = binding.rvStories
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val adapter = MainActivityAdapter(listStories)
+        val adapter = MainActivityAdapter(listStories,this)
         recyclerView.adapter = adapter
+    }
+
+    override fun itemclick(position: Int) {
+        val item=listStories[position]
+        Toast.makeText(this,item.name,Toast.LENGTH_SHORT).show()
     }
 }
