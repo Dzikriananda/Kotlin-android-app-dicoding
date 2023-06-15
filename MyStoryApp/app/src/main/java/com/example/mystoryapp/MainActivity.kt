@@ -3,9 +3,15 @@ package com.example.mystoryapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.mystoryapp.databinding.ActivityMainBinding
 import com.example.mystoryapp.recyclerview.MainActivityAdapter
 import com.example.mystoryapp.recyclerview.OnItemClickListener
@@ -33,6 +39,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             this@MainActivity,
             viewModelFactory
         )[MainViewModel::class.java]
+
 
 
         getStories()
@@ -70,6 +77,24 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
     override fun itemclick(position: Int) {
         val item=listStories[position]
-        Toast.makeText(this,item.name,Toast.LENGTH_SHORT).show()
+        showDetail(item!!)
+    }
+
+    fun showDetail(item: ListStoryItem) {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        builder.setTitle("Story Detail")
+        val dialogLayout = inflater.inflate(R.layout.detail_story, null)
+        val name  = dialogLayout.findViewById<TextView>(R.id.textViewName)
+        val description = dialogLayout.findViewById<TextView>(R.id.textViewDescription)
+        val image = dialogLayout.findViewById<ImageView>(R.id.imageview_detail)
+        name.text = item.name
+        description.text = item.description
+        Glide.with(this)
+            .load(item.photoUrl)
+            .into(image)
+        builder.setView(dialogLayout)
+        builder.setPositiveButton("OK") { dialogInterface, i ->  }
+        builder.show()
     }
 }

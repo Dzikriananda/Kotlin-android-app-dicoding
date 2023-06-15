@@ -16,7 +16,6 @@
         <ImageView
             android:id="@+id/imageview"
             android:layout_width="match_parent"
-            android:src="@drawable/mcminat"
             android:layout_gravity="center"
             android:layout_height="100dp" />
 
@@ -24,7 +23,6 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ambatukam"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_gravity="center"
