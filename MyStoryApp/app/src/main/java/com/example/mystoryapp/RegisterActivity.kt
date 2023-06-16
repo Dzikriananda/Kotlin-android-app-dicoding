@@ -3,6 +3,7 @@ package com.example.mystoryapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.mystoryapp.databinding.ActivityRegisterBinding
@@ -40,22 +41,31 @@ class RegisterActivity : AppCompatActivity() {
 
         registerViewModel.register(fullname,email,password).observe(this) {
             when (it) {
+                is Result.Loading -> {showLoadingIndicator()}
                 is Result.Success -> {
+                    hideLoadingIndicator()
                     Toast.makeText(this@RegisterActivity, "Register Sukses", Toast.LENGTH_SHORT)
                         .show()
                     finish()
-
                 }
                 is Result.Error -> {
+                    hideLoadingIndicator()
                     Toast.makeText(this@RegisterActivity, it.error, Toast.LENGTH_LONG).show()
                 }
-
                 else -> {}
             }
-
         }
+    }
 
+    fun showLoadingIndicator(){
+        if (binding.progressBar.visibility != View.VISIBLE) {
+            binding.progressBar.visibility = View.VISIBLE
+        }
+    }
 
-
+    fun hideLoadingIndicator(){
+        if (binding.progressBar.visibility != View.INVISIBLE) {
+            binding.progressBar.visibility = View.INVISIBLE
+        }
     }
 }

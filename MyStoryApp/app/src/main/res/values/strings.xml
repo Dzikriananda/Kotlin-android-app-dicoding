@@ -2,4 +2,6 @@
     <string name="app_name">MyStoryApp</string>
     <string name="register">REGISTER</string>
     <string name="login">LOGIN</string>
+    <string name="open_gallery">Open Gallery</string>
+    <string name="your_description">Your Description</string>
 </resources>

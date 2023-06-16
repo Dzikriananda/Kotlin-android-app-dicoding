@@ -1,10 +1,10 @@
 package com.example.mystoryapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -44,6 +44,11 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
         getStories()
 
+        binding.FabButton.setOnClickListener{
+            val intent = Intent(this, AddStoryActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     fun setToken(){
@@ -55,11 +60,16 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     fun getStories(){
         mainViewModel.getStories(token).observe(this){
             when(it){
+                is Result.Loading -> {
+                    showLoadingIndicator()
+                }
                 is Result.Success -> {
+                    hideLoadingIndicator()
                     listStories = it.data.listStory
                     setRecyclerView()
                 }
                 is Result.Error -> {
+                    hideLoadingIndicator()
                     Toast.makeText(this,it.error,Toast.LENGTH_SHORT).show()
                 }
                 else ->{}
@@ -85,9 +95,9 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         val inflater = layoutInflater
         builder.setTitle("Story Detail")
         val dialogLayout = inflater.inflate(R.layout.detail_story, null)
-        val name  = dialogLayout.findViewById<TextView>(R.id.textViewName)
-        val description = dialogLayout.findViewById<TextView>(R.id.textViewDescription)
-        val image = dialogLayout.findViewById<ImageView>(R.id.imageview_detail)
+        val name  = dialogLayout.findViewById<TextView>(R.id.tv_detail_name)
+        val description = dialogLayout.findViewById<TextView>(R.id.tv_detail_description)
+        val image = dialogLayout.findViewById<ImageView>(R.id.iv_detail_photo)
         name.text = item.name
         description.text = item.description
         Glide.with(this)
@@ -96,5 +106,13 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         builder.setView(dialogLayout)
         builder.setPositiveButton("OK") { dialogInterface, i ->  }
         builder.show()
+    }
+
+    fun showLoadingIndicator(){
+        binding.progressBar.setVisibility(View.VISIBLE)
+    }
+
+    fun hideLoadingIndicator(){
+        binding.progressBar.setVisibility(View.INVISIBLE)
     }
 }

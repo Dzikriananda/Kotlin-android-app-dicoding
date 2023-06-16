@@ -37,7 +37,7 @@ class MainActivityAdapter(private val ListStory: List<ListStoryItem>,private val
     }
 
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.imageview)
-        val textView: TextView = itemView.findViewById(R.id.textView)
+        val imageView: ImageView = itemView.findViewById(R.id.iv_item_photo)
+        val textView: TextView = itemView.findViewById(R.id.tv_item_name)
     }
 }

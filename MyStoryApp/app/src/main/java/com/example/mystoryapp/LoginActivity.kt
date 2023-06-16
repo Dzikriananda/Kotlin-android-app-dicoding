@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.mystoryapp.databinding.ActivityLoginBinding
@@ -40,7 +41,6 @@ class LoginActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             Login()
         }
-
     }
 
     fun Login(){
@@ -50,14 +50,21 @@ class LoginActivity : AppCompatActivity() {
         Log.i("login",password)
         loginViewModel.login(email,password).observe(this){
             when(it){
+                is Result.Loading -> {
+                    showLoadingIndicator()
+                }
                 is Result.Success -> {
+                    hideLoadingIndicator()
                     Toast.makeText(this@LoginActivity, it.data.loginResult.name, Toast.LENGTH_SHORT).show()
                     Log.i("login","sukses")
                     val token = it.data.loginResult.token
                     preferences.Save_Token(token)
+                    val intent = Intent(this@LoginActivity,MainActivity::class.java)
+                    startActivity(intent)
 
                 }
                 is Result.Error -> {
+                    hideLoadingIndicator()
                     Toast.makeText(this@LoginActivity, it.error, Toast.LENGTH_LONG).show()
                     Log.i("login","gagal")
 
@@ -74,5 +81,13 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    fun showLoadingIndicator(){
+        binding.progressBar.setVisibility(View.VISIBLE)
+    }
+
+    fun hideLoadingIndicator(){
+        binding.progressBar.setVisibility(View.INVISIBLE)
     }
 }

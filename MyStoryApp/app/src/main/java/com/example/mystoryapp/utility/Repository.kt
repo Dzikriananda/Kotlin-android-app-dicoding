@@ -10,6 +10,7 @@ import com.example.mystoryapp.response.RegisterResponse
 
 class Repository(private val apiService: ApiService) {
     fun register(name: String, email: String, password: String): LiveData<Result<RegisterResponse>> = liveData{
+        emit(Result.Loading)
         try {
             val response = apiService.register(name, email, password)
             emit(Result.Success(response))
@@ -20,6 +21,7 @@ class Repository(private val apiService: ApiService) {
     }
 
     fun login(email: String, password: String): LiveData<Result<LoginResponse>> = liveData{
+        emit(Result.Loading)
         try {
 
             val response = apiService.login(email, password)
@@ -31,6 +33,7 @@ class Repository(private val apiService: ApiService) {
     }
 
     fun getStories(token:String): LiveData<Result<GetStoriesResponse>> = liveData {
+        emit(Result.Loading)
         try {
             Log.i("result","mencoba")
             val response = apiService.get_profile("Bearer $token")
