@@ -15,11 +15,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.mystoryapp.databinding.ActivityAddStoryBinding
+import com.example.mystoryapp.utility.*
 import com.example.mystoryapp.utility.Preferences
-import com.example.mystoryapp.utility.Result
-import com.example.mystoryapp.utility.ViewModelFactory
-import com.example.mystoryapp.utility.rotateFile
-import com.example.mystoryapp.utility.uriToFile
 import com.example.mystoryapp.viewmodels.AddStoryViewModel
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -68,7 +65,7 @@ class AddStoryActivity : AppCompatActivity() {
             startCameraX()
         }
 
-        binding.uploadButton.setOnClickListener{
+        binding.buttonAdd.setOnClickListener{
             uploadImage()
         }
     }
@@ -173,9 +170,7 @@ class AddStoryActivity : AppCompatActivity() {
         }
     }
 
-    private fun reduceFileImage(file: File): File {
-        return file
-    }
+
 
     companion object {
         const val CAMERA_X_RESULT = 200

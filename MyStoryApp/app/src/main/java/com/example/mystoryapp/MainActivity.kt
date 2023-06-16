@@ -2,6 +2,7 @@ package com.example.mystoryapp
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        preferences = Preferences(this)
+
         setToken()
 
         val viewModelFactory = ViewModelFactory.getInstance(this)
@@ -52,10 +55,13 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             startActivity(intent)
         }
 
+        binding.actionLogout.setOnClickListener{
+            logOutAlert(it)
+        }
+
     }
 
     fun setToken(){
-        preferences = Preferences(this)
         token = preferences.Get_Token()!!
         Log.i("result",token)
     }
@@ -141,5 +147,27 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
     fun hideLoadingIndicator(){
         binding.progressBar.setVisibility(View.INVISIBLE)
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_HOME)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
+
+    fun logOutAlert(view: View) {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.log_out_alert, null)
+        builder.setView(dialogLayout)
+        builder.setPositiveButton("OK") { dialogInterface, i -> Toast.makeText(applicationContext, "Logout", Toast.LENGTH_SHORT).show();logout() }
+        builder.show()
+    }
+
+    fun logout(){
+        preferences.Logout()
+        val intent = Intent(this, LoginRegisterActivity::class.java)
+        startActivity(intent)
     }
 }

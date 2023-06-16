@@ -12,10 +12,12 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class Repository(private val apiService: ApiService) {
-    fun register(name: String, email: String, password: String): LiveData<Result<RegisterResponse>> = liveData{
+
+    fun login(email: String, password: String): LiveData<Result<LoginResponse>> = liveData{
         emit(Result.Loading)
         try {
-            val response = apiService.register(name, email, password)
+
+            val response = apiService.login(email, password)
             emit(Result.Success(response))
         }
         catch(e: Exception){
@@ -23,11 +25,10 @@ class Repository(private val apiService: ApiService) {
         }
     }
 
-    fun login(email: String, password: String): LiveData<Result<LoginResponse>> = liveData{
+    fun register(name: String, email: String, password: String): LiveData<Result<RegisterResponse>> = liveData{
         emit(Result.Loading)
         try {
-
-            val response = apiService.login(email, password)
+            val response = apiService.register(name, email, password)
             emit(Result.Success(response))
         }
         catch(e: Exception){
