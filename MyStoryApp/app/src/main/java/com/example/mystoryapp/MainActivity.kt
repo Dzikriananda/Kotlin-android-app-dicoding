@@ -1,6 +1,8 @@
 package com.example.mystoryapp
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +11,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -40,8 +44,6 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             viewModelFactory
         )[MainViewModel::class.java]
 
-
-
         getStories()
 
         binding.FabButton.setOnClickListener{
@@ -56,6 +58,12 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         token = preferences.Get_Token()!!
         Log.i("result",token)
     }
+
+    override fun onResume() {
+        super.onResume()
+        getStories()
+    }
+
 
     fun getStories(){
         mainViewModel.getStories(token).observe(this){
@@ -98,8 +106,24 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         val name  = dialogLayout.findViewById<TextView>(R.id.tv_detail_name)
         val description = dialogLayout.findViewById<TextView>(R.id.tv_detail_description)
         val image = dialogLayout.findViewById<ImageView>(R.id.iv_detail_photo)
+        val lat = dialogLayout.findViewById<TextView>(R.id.tv_detail_lat)
+        val lon = dialogLayout.findViewById<TextView>(R.id.tv_detail_lon)
         name.text = item.name
         description.text = item.description
+        if(item.lat!=null){
+            lat.text= item.lat.toString()
+        }
+        else{
+            lat.text = "Latitute not Available"
+        }
+
+        if(item.lon!=null){
+            lon.text= item.lon.toString()
+        }
+        else{
+            lon.text = "Longitude not Available"
+        }
+
         Glide.with(this)
             .load(item.photoUrl)
             .into(image)

@@ -1,8 +1,12 @@
 package com.example.mystoryapp.network
 
+import com.example.mystoryapp.response.AddStoryResponse
 import com.example.mystoryapp.response.GetStoriesResponse
 import com.example.mystoryapp.response.LoginResponse
 import com.example.mystoryapp.response.RegisterResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiService {
@@ -25,6 +29,16 @@ interface ApiService {
     suspend fun get_profile(
         @Header("Authorization") token: String
     ): GetStoriesResponse
+
+    @Multipart
+    @POST("stories")
+    suspend fun uploadStory(
+        @Header("Authorization") token: String,
+        @Part("description") description: RequestBody,
+        @Part photo: MultipartBody.Part,
+    ): AddStoryResponse
+
+
 
 
 

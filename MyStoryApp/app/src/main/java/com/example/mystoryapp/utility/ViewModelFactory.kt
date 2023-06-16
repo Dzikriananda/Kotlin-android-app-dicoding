@@ -3,6 +3,7 @@ package com.example.mystoryapp.utility
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.mystoryapp.viewmodels.AddStoryViewModel
 import com.example.mystoryapp.viewmodels.LoginViewModel
 import com.example.mystoryapp.viewmodels.MainViewModel
 import com.example.mystoryapp.viewmodels.RegisterViewModel
@@ -15,7 +16,10 @@ class ViewModelFactory(private val repository: Repository): ViewModelProvider.Ne
             return RegisterViewModel(repository) as T
         }  else if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(repository) as T
-        } else if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
+        } else if (modelClass.isAssignableFrom(AddStoryViewModel::class.java)) {
+            return AddStoryViewModel(repository) as T
+        }
+        else if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
             return MainViewModel(repository) as T
         }
 
