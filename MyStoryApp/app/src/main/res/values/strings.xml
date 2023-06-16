@@ -4,4 +4,12 @@
     <string name="login">LOGIN</string>
     <string name="open_gallery">Open Gallery</string>
     <string name="your_description">Your Description</string>
+    <string name="detail_name">Posted by : %s</string>
+    <string name="detail_desc">Description : %s</string>
+    <string name="detail_time">Created at : %s</string>
+    <string name="detail_lat">Latitude : %f</string>
+    <string name="detail_lon">Longitude: %f</string>
+    <string name="latitude_not_ava">Latitude not Available</string>
+    <string name="longitued_not_ava">Longitude not Available</string>
+
 </resources>

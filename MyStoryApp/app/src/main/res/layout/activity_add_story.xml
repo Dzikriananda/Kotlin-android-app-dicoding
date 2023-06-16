@@ -16,34 +16,62 @@
       app:layout_constraintHorizontal_bias="0.0"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@drawable/mcminat" />
+      app:srcCompat="@drawable/ic_place_holder" />
 
   <EditText
       android:id="@+id/ed_add_description"
       style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-      android:layout_width="0dp"
+      android:layout_width="300dp"
       android:layout_height="wrap_content"
-      android:layout_marginStart="50dp"
-      android:layout_marginEnd="50dp"
       android:ems="10"
       android:hint="@string/your_description"
       android:textColor="@color/black"
       android:textColorHint="@color/black"
       app:boxCornerRadiusBottomEnd="12dp"
       app:boxCornerRadiusTopEnd="12dp"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.0"
-      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="@+id/previewImageView"
+      app:layout_constraintStart_toStartOf="@+id/previewImageView"
       app:layout_constraintTop_toBottomOf="@+id/previewImageView" />
+
+  <EditText
+      android:id="@+id/ed_add_latitude"
+      style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:hint="Enter Latitude"
+      android:textColor="@color/black"
+      android:textColorHint="@color/black"
+      app:boxCornerRadiusBottomEnd="12dp"
+      app:boxCornerRadiusTopEnd="12dp"
+      app:layout_constraintEnd_toEndOf="@+id/ed_add_description"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="@+id/ed_add_description"
+      app:layout_constraintTop_toBottomOf="@+id/ed_add_description" />
+
+  <EditText
+      android:id="@+id/ed_add_longitude"
+      style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:hint="Enter Longitude"
+      android:textColor="@color/black"
+      android:textColorHint="@color/black"
+      app:boxCornerRadiusBottomEnd="12dp"
+      app:boxCornerRadiusTopEnd="12dp"
+      app:layout_constraintEnd_toEndOf="@+id/ed_add_latitude"
+      app:layout_constraintStart_toStartOf="@+id/ed_add_latitude"
+      app:layout_constraintTop_toBottomOf="@+id/ed_add_latitude" />
 
   <Button
       android:id="@+id/galleryButton"
       android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:layout_marginTop="100dp"
+      android:layout_marginTop="10dp"
       android:text="@string/open_gallery"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/ed_add_description" />
+      app:layout_constraintTop_toBottomOf="@+id/ed_add_longitude" />
 
   <Button
       android:id="@+id/uploadButton"
@@ -70,7 +98,7 @@
       app:layout_constraintHorizontal_bias="1.0"
       app:layout_constraintStart_toEndOf="@+id/galleryButton"
       app:layout_constraintTop_toTopOf="@+id/galleryButton"
-      app:layout_constraintVertical_bias="1.0" />
+      app:layout_constraintVertical_bias="0.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

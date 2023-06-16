@@ -35,8 +35,19 @@ interface ApiService {
     suspend fun uploadStory(
         @Header("Authorization") token: String,
         @Part("description") description: RequestBody,
-        @Part photo: MultipartBody.Part,
+        @Part photo: MultipartBody.Part
     ): AddStoryResponse
+
+    @Multipart
+    @POST("stories")
+    suspend fun uploadStoryWithLatLon(
+        @Header("Authorization") token: String,
+        @Part("description") description: RequestBody,
+        @Part photo: MultipartBody.Part,
+        @Part("lat") lat: RequestBody,
+        @Part("lon") lon: RequestBody
+    ): AddStoryResponse
+
 
 
 

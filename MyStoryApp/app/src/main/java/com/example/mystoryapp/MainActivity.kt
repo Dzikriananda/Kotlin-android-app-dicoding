@@ -1,6 +1,7 @@
 package com.example.mystoryapp
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
@@ -108,20 +109,22 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         val image = dialogLayout.findViewById<ImageView>(R.id.iv_detail_photo)
         val lat = dialogLayout.findViewById<TextView>(R.id.tv_detail_lat)
         val lon = dialogLayout.findViewById<TextView>(R.id.tv_detail_lon)
-        name.text = item.name
-        description.text = item.description
+        val timestamp = dialogLayout.findViewById<TextView>(R.id.tv_detail_timestamp)
+        name.text = getString(R.string.detail_name,item.name)
+        description.text = getString(R.string.detail_desc,item.description)
+        timestamp.text = getString(R.string.detail_time,item.createdAt)
         if(item.lat!=null){
-            lat.text= item.lat.toString()
+            lat.text= getString(R.string.detail_lat,item.lat)
         }
         else{
-            lat.text = "Latitute not Available"
+            lat.text = getString(R.string.latitude_not_ava)
         }
 
         if(item.lon!=null){
-            lon.text= item.lon.toString()
+            lon.text= getString(R.string.detail_lon,item.lon)
         }
         else{
-            lon.text = "Longitude not Available"
+            lon.text = getString(R.string.longitued_not_ava)
         }
 
         Glide.with(this)

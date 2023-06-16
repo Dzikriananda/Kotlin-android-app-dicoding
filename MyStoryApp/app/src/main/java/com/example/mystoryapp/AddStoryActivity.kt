@@ -21,9 +21,9 @@ import com.example.mystoryapp.utility.ViewModelFactory
 import com.example.mystoryapp.utility.rotateFile
 import com.example.mystoryapp.utility.uriToFile
 import com.example.mystoryapp.viewmodels.AddStoryViewModel
-import com.example.mystoryapp.viewmodels.MainViewModel
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
@@ -45,7 +45,6 @@ class AddStoryActivity : AppCompatActivity() {
 
         preferences = Preferences(this)
         token = preferences.Get_Token()!!
-
 
         val viewModelFactory = ViewModelFactory.getInstance(this)
         viewModel = ViewModelProvider(
@@ -147,28 +146,30 @@ class AddStoryActivity : AppCompatActivity() {
         if (getFile != null) {
             val file = reduceFileImage(getFile as File)
             val desc = binding.edAddDescription.text.toString()
+            val lat = binding.edAddLatitude.text.toString()
+            val lon = binding.edAddLongitude.text.toString()
             val description = desc.toRequestBody("text/plain".toMediaType())
             val requestImageFile = file.asRequestBody("image/jpeg".toMediaType())
+            val latitude = lat.toRequestBody("text/plain".toMediaType())
+            val longitude = lon.toRequestBody("text/plain".toMediaType())
+
             val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
                 "photo",
                 file.name,
                 requestImageFile
             )
 
-            viewModel.addStory(token,description,imageMultipart).observe(this){
-                when(it){
-                    is Result.Success -> {
-                        Toast.makeText(this@AddStoryActivity, "sukses", Toast.LENGTH_SHORT).show()
-                        finish()
-                    }
-                    is Result.Error -> {
-                        Toast.makeText(this@AddStoryActivity, it.error, Toast.LENGTH_LONG).show()
-                        Log.i("ERROR",it.error)
-                    }
-                    else -> {}
-                }
-            }
+            Log.i("value",lat)
 
+            if((lat == "") && (lon == "")){
+                UploadwithoutLatLon(description,imageMultipart)
+            }
+            else if(lat == "" || lon == ""){
+                Toast.makeText(this,"Fill both Lat and Lon or Nothing!",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                UploadwithLatLon(description,imageMultipart, latitude , longitude )
+            }
         }
     }
 
@@ -180,5 +181,37 @@ class AddStoryActivity : AppCompatActivity() {
         const val CAMERA_X_RESULT = 200
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private const val REQUEST_CODE_PERMISSIONS = 10
+    }
+
+    fun UploadwithoutLatLon(description: RequestBody, imageMultipart: MultipartBody.Part){
+        viewModel.addStory(token,description,imageMultipart).observe(this){
+            when(it){
+                is Result.Success -> {
+                    Toast.makeText(this@AddStoryActivity, "sukses", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                is Result.Error -> {
+                    Toast.makeText(this@AddStoryActivity, it.error, Toast.LENGTH_LONG).show()
+                    Log.i("ERROR",it.error)
+                }
+                else -> {}
+            }
+        }
+    }
+
+    fun UploadwithLatLon(description: RequestBody, imageMultipart: MultipartBody.Part,Lattitude: RequestBody, Longitude: RequestBody){
+        viewModel.addStoryWithLatLon(token,description,imageMultipart,Lattitude,Longitude).observe(this){
+            when(it){
+                is Result.Success -> {
+                    Toast.makeText(this@AddStoryActivity, "sukses", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+                is Result.Error -> {
+                    Toast.makeText(this@AddStoryActivity, it.error, Toast.LENGTH_LONG).show()
+                    Log.i("ERROR",it.error)
+                }
+                else -> {}
+            }
+        }
     }
 }

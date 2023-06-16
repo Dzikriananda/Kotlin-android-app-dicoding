@@ -61,5 +61,18 @@ class Repository(private val apiService: ApiService) {
         }
     }
 
+    fun addStorywithLatLon(token:String, description: RequestBody,image: MultipartBody.Part,lat: RequestBody,lon: RequestBody): LiveData<Result<AddStoryResponse>> = liveData {
+        emit(Result.Loading)
+        try {
+            Log.i("result","mencoba")
+            val response = apiService.uploadStoryWithLatLon("Bearer $token",description,image,lat,lon)
+            emit(Result.Success(response))
+        }
+        catch(e: Exception){
+            Log.i("result","gagal")
+            emit(Result.Error(e.toString()))
+        }
+    }
+
 
 }
