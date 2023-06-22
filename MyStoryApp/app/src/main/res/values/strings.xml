@@ -11,5 +11,6 @@
     <string name="detail_lon">Longitude: %f</string>
     <string name="latitude_not_ava">Latitude not Available</string>
     <string name="longitued_not_ava">Longitude not Available</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

@@ -27,14 +27,12 @@ class CustomEditText : AppCompatEditText {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
 
-            override fun afterTextChanged(input: Editable?) {
-                var text = input?.toString()
-
-                if (text != null && text.length < 8) {
-                    // Show error if text length is less than 8
-                    error = "Text must be at least 8 characters long"
+            override fun afterTextChanged(input_password: Editable?) {
+                var input_text = input_password?.toString()
+                if ((input_text != null) && (input_text.length < 8)) {
+                    // Memunculkan Error jika karakter kurang dari 8
+                    error = "Password must be at least 8 characters long!"
                 } else {
-                    // Clear the error if text length is 8 or more
                     error = null
                 }
             }

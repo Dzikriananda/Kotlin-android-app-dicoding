@@ -27,7 +27,9 @@ interface ApiService {
 
     @GET("stories")
     suspend fun get_profile(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
     ): GetStoriesResponse
 
     @Multipart

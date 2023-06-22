@@ -19,9 +19,7 @@ class ViewModelFactory(private val repository: Repository): ViewModelProvider.Ne
         } else if (modelClass.isAssignableFrom(AddStoryViewModel::class.java)) {
             return AddStoryViewModel(repository) as T
         }
-        else if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(repository) as T
-        }
+
 
 
         throw IllegalArgumentException("Unknown ViewModel Class: ${modelClass.name}")
@@ -32,7 +30,7 @@ class ViewModelFactory(private val repository: Repository): ViewModelProvider.Ne
         private var instance: ViewModelFactory? = null
         fun getInstance(context: Context): ViewModelFactory =
             instance ?: synchronized(this) {
-                instance ?: ViewModelFactory(Injection.provideRepository(context))
+                instance ?: ViewModelFactory(Injection.provide_Repository(context))
             }.also {
                 instance = it
             }

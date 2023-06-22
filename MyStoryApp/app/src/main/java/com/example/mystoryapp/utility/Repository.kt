@@ -36,7 +36,7 @@ class Repository(private val apiService: ApiService) {
         }
     }
 
-    fun getStories(token:String): LiveData<Result<GetStoriesResponse>> = liveData {
+    /*fun getStories(token:String): LiveData<Result<GetStoriesResponse>> = liveData {
         emit(Result.Loading)
         try {
             Log.i("result","mencoba")
@@ -47,7 +47,7 @@ class Repository(private val apiService: ApiService) {
             Log.i("result","gagal")
             emit(Result.Error(e.toString()))
         }
-    }
+    }*/
 
     fun addStory(token:String, description: RequestBody,image: MultipartBody.Part): LiveData<Result<AddStoryResponse>> = liveData {
         emit(Result.Loading)

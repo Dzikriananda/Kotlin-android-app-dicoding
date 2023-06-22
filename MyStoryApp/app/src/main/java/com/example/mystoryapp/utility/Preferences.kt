@@ -4,9 +4,7 @@ import android.content.Context
 
 internal class Preferences(context: Context) {
 
-    private val preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
-
-
+    private val preferences = context.getSharedPreferences(DATABASE_NAME, Context.MODE_PRIVATE)
     fun Save_Token(data: String){
         val editor = preferences.edit()
         editor.putString(TOKEN, data)
@@ -24,10 +22,8 @@ internal class Preferences(context: Context) {
     }
 
     companion object{
-        private const val NAME = "name"
-        private const val PREFERENCES_NAME = "pref"
+        private const val DATABASE_NAME = "pref"
         private const val TOKEN = "token"
-        private const val USER_ID = "userId"
 
     }
 

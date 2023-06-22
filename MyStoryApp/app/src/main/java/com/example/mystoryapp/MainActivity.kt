@@ -1,10 +1,7 @@
 package com.example.mystoryapp
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.DialogInterface
+
 import android.content.Intent
-import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,18 +10,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.mystoryapp.databinding.ActivityMainBinding
 import com.example.mystoryapp.recyclerview.MainActivityAdapter
 import com.example.mystoryapp.recyclerview.OnItemClickListener
+import com.example.mystoryapp.recyclerview.StoryAdapter
 import com.example.mystoryapp.response.ListStoryItem
+import com.example.mystoryapp.utility.MainViewModelFactory
 import com.example.mystoryapp.utility.Preferences
-import com.example.mystoryapp.utility.ViewModelFactory
-import com.example.mystoryapp.utility.Result
 import com.example.mystoryapp.viewmodels.MainViewModel
 
 class MainActivity : AppCompatActivity(), OnItemClickListener {
@@ -42,7 +38,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
         setToken()
 
-        val viewModelFactory = ViewModelFactory.getInstance(this)
+
+        val viewModelFactory = MainViewModelFactory.getInstance(this)
         mainViewModel = ViewModelProvider(
             this@MainActivity,
             viewModelFactory
@@ -59,6 +56,11 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
             logOutAlert(it)
         }
 
+        binding.actionMaps.setOnClickListener {
+            val intent = Intent(this,MapsActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     fun setToken(){
@@ -72,7 +74,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     }
 
 
-    fun getStories(){
+   /* fun getStories(){
         mainViewModel.getStories(token).observe(this){
             when(it){
                 is Result.Loading -> {
@@ -91,14 +93,23 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
             }
         }
+    } */
+
+    fun getStories(){
+        val adapter = StoryAdapter()
+        binding.rvStories.layoutManager =LinearLayoutManager(this)
+        binding.rvStories.adapter = adapter
+        mainViewModel.story.observe(this,{
+            adapter.submitData(lifecycle,it)
+        })
     }
 
-    fun setRecyclerView(){
+    /* fun setRecyclerView(){
         val recyclerView = binding.rvStories
         recyclerView.layoutManager = LinearLayoutManager(this)
         val adapter = MainActivityAdapter(listStories,this)
         recyclerView.adapter = adapter
-    }
+    } */
 
     override fun itemclick(position: Int) {
         val item=listStories[position]
