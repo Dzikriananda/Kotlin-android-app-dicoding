@@ -4,10 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.mystoryapp.network.ApiService
-import com.example.mystoryapp.response.AddStoryResponse
-import com.example.mystoryapp.response.GetStoriesResponse
-import com.example.mystoryapp.response.LoginResponse
-import com.example.mystoryapp.response.RegisterResponse
+import com.example.mystoryapp.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 

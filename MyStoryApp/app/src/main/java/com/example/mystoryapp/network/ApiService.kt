@@ -1,9 +1,6 @@
 package com.example.mystoryapp.network
 
-import com.example.mystoryapp.response.AddStoryResponse
-import com.example.mystoryapp.response.GetStoriesResponse
-import com.example.mystoryapp.response.LoginResponse
-import com.example.mystoryapp.response.RegisterResponse
+import com.example.mystoryapp.response.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -49,6 +46,11 @@ interface ApiService {
         @Part("lat") lat: RequestBody,
         @Part("lon") lon: RequestBody
     ): AddStoryResponse
+
+    @GET("stories?location=1")
+    suspend fun getStoriesWithLoc(
+        @Header("Authorization") token: String,
+    ): StoryWithLocResponse
 
 
 

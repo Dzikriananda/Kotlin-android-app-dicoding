@@ -21,6 +21,7 @@ import com.example.mystoryapp.response.ListStoryItem
 import com.example.mystoryapp.utility.MainViewModelFactory
 import com.example.mystoryapp.utility.Preferences
 import com.example.mystoryapp.viewmodels.MainViewModel
+import com.example.mystoryapp.utility.Result
 
 class MainActivity : AppCompatActivity(), OnItemClickListener {
     private lateinit var binding: ActivityMainBinding
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         }
 
         binding.actionMaps.setOnClickListener {
+            getMap()
             val intent = Intent(this,MapsActivity::class.java)
             startActivity(intent)
         }
@@ -160,13 +162,14 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         builder.show()
     }
 
+    /*
     fun showLoadingIndicator(){
         binding.progressBar.setVisibility(View.VISIBLE)
     }
 
     fun hideLoadingIndicator(){
         binding.progressBar.setVisibility(View.INVISIBLE)
-    }
+    }*/
 
     override fun onBackPressed() {
         val intent = Intent(Intent.ACTION_MAIN)
@@ -192,5 +195,19 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
     private fun refreshData(){
         adapter.refresh()
+    }
+
+    fun getMap(){
+        mainViewModel.getStoryWithLoc().observe(this){
+            when(it){
+                is Result.Success -> {
+                    Log.i("map",it.data.listStory.toString())
+                }
+                is Result.Error -> {
+                    Log.i("map", it.error)
+                }
+                else ->{}
+            }
+        }
     }
 }
