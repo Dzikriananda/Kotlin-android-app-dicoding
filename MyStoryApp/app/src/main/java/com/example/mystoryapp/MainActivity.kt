@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.mystoryapp.databinding.ActivityMainBinding
 import com.example.mystoryapp.recyclerview.OnItemClickListener
@@ -26,7 +27,9 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     private lateinit var preferences: Preferences
     private lateinit var token: String
     private lateinit var mainViewModel: MainViewModel
-    private lateinit var listStories: List<ListStoryItem>
+    private  lateinit var adapter: StoryAdapter
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -68,7 +71,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
 
     override fun onResume() {
         super.onResume()
-        getStories()
+        refreshData()
     }
 
 
@@ -94,11 +97,19 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     } */
 
     fun getStories(){
-        val adapter = StoryAdapter(this)
+        adapter = StoryAdapter(this)
         binding.rvStories.layoutManager =LinearLayoutManager(this)
         binding.rvStories.adapter = adapter
         mainViewModel.story.observe(this,{
             adapter.submitData(lifecycle,it)
+        })
+
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (positionStart == 0) {
+                    binding.rvStories.scrollToPosition(0)
+                }
+            }
         })
     }
 
@@ -177,5 +188,9 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         preferences.Logout()
         val intent = Intent(this, LoginRegisterActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun refreshData(){
+        adapter.refresh()
     }
 }
