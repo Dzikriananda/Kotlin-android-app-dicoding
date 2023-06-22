@@ -7,10 +7,7 @@ import com.example.mystoryapp.response.ListStoryItem
 import android.util.Log
 
 
-class StoryPagingSource(private val apiService: ApiService) : PagingSource<Int, ListStoryItem>() {
-
-
-    val token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJ1c2VyLWNpTHZabml1TDAxUTZyLS0iLCJpYXQiOjE2ODc0MTkwNzB9.44uLqUQ9OwFEQ21UEFGJawqcFRzkgr_Qb4Abvsx26uE"
+class StoryPagingSource(private val apiService: ApiService, private val token: String) : PagingSource<Int, ListStoryItem>() {
 
     private companion object {
         const val INITIAL_PAGE_INDEX = 1

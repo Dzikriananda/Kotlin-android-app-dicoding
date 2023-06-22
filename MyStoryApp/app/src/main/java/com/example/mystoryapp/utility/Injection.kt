@@ -11,7 +11,7 @@ object Injection {
 
     fun providePagingRepository(context: Context): StoryRepository{
         val apiService = ApiConfig.getApiService()
-        return StoryRepository(apiService)
+        return StoryRepository(apiService,context)
 
     }
 }
