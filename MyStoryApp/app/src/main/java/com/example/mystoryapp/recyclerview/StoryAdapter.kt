@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.mystoryapp.response.ListStoryItem
 import com.example.mystoryapp.databinding.RvDesignBinding
 
-class StoryAdapter :
+class StoryAdapter(private val listener: OnItemClickListener) :
     PagingDataAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -22,7 +22,11 @@ class StoryAdapter :
         val data = getItem(position)
         if (data != null) {
             holder.bind(data)
+            holder.itemView.setOnClickListener{
+                listener.itemclick(data)
+            }
         }
+
     }
 
     class MyViewHolder(private val binding: RvDesignBinding) :

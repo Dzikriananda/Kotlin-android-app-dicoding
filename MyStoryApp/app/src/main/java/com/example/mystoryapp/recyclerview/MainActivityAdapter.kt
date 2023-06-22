@@ -1,4 +1,8 @@
+
+
 package com.example.mystoryapp.recyclerview
+
+/*
 
 
 import android.view.LayoutInflater
@@ -41,3 +45,5 @@ class MainActivityAdapter(private val ListStory: List<ListStoryItem>,private val
         val textView: TextView = itemView.findViewById(R.id.tv_item_name)
     }
 }
+
+*/

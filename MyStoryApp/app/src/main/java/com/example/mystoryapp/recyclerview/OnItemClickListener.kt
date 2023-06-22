@@ -1,5 +1,7 @@
 package com.example.mystoryapp.recyclerview
 
+import com.example.mystoryapp.response.ListStoryItem
+
 interface OnItemClickListener {
-    fun itemclick(position:Int)
+    fun itemclick(data: ListStoryItem)
 }

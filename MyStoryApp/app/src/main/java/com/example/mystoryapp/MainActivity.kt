@@ -11,11 +11,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
-import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.mystoryapp.databinding.ActivityMainBinding
-import com.example.mystoryapp.recyclerview.MainActivityAdapter
 import com.example.mystoryapp.recyclerview.OnItemClickListener
 import com.example.mystoryapp.recyclerview.StoryAdapter
 import com.example.mystoryapp.response.ListStoryItem
@@ -96,7 +94,7 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
     } */
 
     fun getStories(){
-        val adapter = StoryAdapter()
+        val adapter = StoryAdapter(this)
         binding.rvStories.layoutManager =LinearLayoutManager(this)
         binding.rvStories.adapter = adapter
         mainViewModel.story.observe(this,{
@@ -111,9 +109,8 @@ class MainActivity : AppCompatActivity(), OnItemClickListener {
         recyclerView.adapter = adapter
     } */
 
-    override fun itemclick(position: Int) {
-        val item=listStories[position]
-        showDetail(item!!)
+    override fun itemclick(data: ListStoryItem) {
+        showDetail(data)
     }
 
     fun showDetail(item: ListStoryItem) {
